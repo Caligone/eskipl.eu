@@ -39,6 +39,7 @@
           if(data.weather[0].id >= 500 && data.weather[0].id <= 621) {
             rainStatus = 'Yes ! ';
             if(engine) {
+              console.log(data.weather[0].id);
               switch(data.weather[0].id) {
               case 500 :	 // light rain
               engine.rain([ [1, 2, 3] ], framerate);
@@ -47,13 +48,13 @@
               engine.rain([ [2, 3, 5]], framerate);
               break;
               case 502 :	 // heavy intensity rain
-              engine.rain([ [3, 8, 10] ], framerate);
+              engine.rain([ [3, 8, 5] ], framerate);
               break;
               case 503 :	 // very heavy rain
-              engine.rain([ [4, 8, 10] ], framerate);
+              engine.rain([ [4, 8, 5] ], framerate);
               break;
               case 504 :	 // extreme rain
-              engine.rain([ [5, 8, 10] ], framerate);
+              engine.rain([ [5, 8, 5] ], framerate);
               break;
               case 511 :	 // freezing rain
               engine.rain([ [1, 2, 3] ], framerate);
@@ -65,10 +66,10 @@
               engine.rain([ [2, 3, 5]], framerate);
               break;
               case 522 :	 // heavy intensity shower rain
-              engine.rain([ [3, 8, 10] ], framerate);
+              engine.rain([ [3, 8, 5] ], framerate);
               break;
               case 531 :   // ragged shower rain
-              engine.rain([ [4, 8, 10] ], framerate);
+              engine.rain([ [4, 8, 5] ], framerate);
               break;
               default:
               engine.rain([ [2, 3, 5]], framerate);
@@ -81,7 +82,6 @@
             if(engine)
               engine.rain([ [0, 0, 0] ], 100);
           }
-          engine.rain([ [5, 8, 10] ], framerate);
         }
       });
     }
