@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>skilpl.eu</title>
+  <title>London weather</title>
   <style media="screen">
             body {
                 overflow: hidden;
@@ -25,6 +25,7 @@
   <script src="jquery.min.js"></script>
   <script>
     var rainStatus = "Loading...";
+    var framerate = 100;
     var engine;
 
     var checkWeather = function() {
@@ -37,15 +38,50 @@
           run();
           if(data.weather[0].id >= 500 && data.weather[0].id <= 621) {
             rainStatus = 'Yes ! ';
-            if(engine)
-              engine.rain([ [3, 3, 0.88], [5, 5, 0.9], [6, 2, 1] ], 100);
+            if(engine) {
+              switch(data.weather[0].id) {
+              case 500 :	 // light rain
+              engine.rain([ [1, 2, 3] ], framerate);
+              break;
+              case 501 :	 // moderate rain
+              engine.rain([ [2, 3, 5]], framerate);
+              break;
+              case 502 :	 // heavy intensity rain
+              engine.rain([ [3, 8, 10] ], framerate);
+              break;
+              case 503 :	 // very heavy rain
+              engine.rain([ [4, 8, 10] ], framerate);
+              break;
+              case 504 :	 // extreme rain
+              engine.rain([ [5, 8, 10] ], framerate);
+              break;
+              case 511 :	 // freezing rain
+              engine.rain([ [1, 2, 3] ], framerate);
+              break;
+              case 520 :	 // light intensity shower rain
+              engine.rain([ [1, 2, 3] ], framerate);
+              break;
+              case 521 :	 // shower rain
+              engine.rain([ [2, 3, 5]], framerate);
+              break;
+              case 522 :	 // heavy intensity shower rain
+              engine.rain([ [3, 8, 10] ], framerate);
+              break;
+              case 531 :   // ragged shower rain
+              engine.rain([ [4, 8, 10] ], framerate);
+              break;
+              default:
+              engine.rain([ [2, 3, 5]], framerate);
+              break;
+              }
+            }
           }
           else {
             rainStatus = 'No (hum... there is probably a bug)';
             if(engine)
-              engine.rain([ [0, 0, 0], [0, 0, 0], [0, 0, 0] ], 100);
+              engine.rain([ [0, 0, 0] ], 100);
           }
-          console.log(data);
+          engine.rain([ [5, 8, 10] ], framerate);
         }
       });
     }
@@ -58,7 +94,7 @@
         engine = new RainyDay({
             image: this
         });
-        engine.rain([ [0, 0, 0], [0, 0, 0], [0, 0, 0] ], 100);
+        engine.rain([ [0, 0, 0] ], 100);
         checkWeather();
       };
       image.crossOrigin = 'anonymous';
