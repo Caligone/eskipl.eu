@@ -228,7 +228,7 @@ RainyDay.prototype.rain = function(presets, speed) {
     context.font="100px Arial";
     context.textAlign = 'center';
     context.fillStyle = 'white';
-    context.fillText("Yes !", this.canvas.width/2, this.canvas.height/2);
+    context.fillText(rainStatus, this.canvas.width/2, this.canvas.height/2);
 
     context.font="10px Arial";
     context.fillStyle = 'white';

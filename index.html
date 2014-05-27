@@ -22,26 +22,51 @@
             }
         </style>
   <script src="rainyday.js"></script>
+  <script src="jquery.min.js"></script>
   <script>
+    var rainStatus = "Loading...";
+    var engine;
+
+    var checkWeather = function() {
+      $.ajax({
+        url: "http://api.openweathermap.org/data/2.5/weather",
+        context: document.body,
+        dataType: 'json',
+        data: { q: 'London,GB', lang: 'en', units: 'metrics', APPID: '037eb417286c6310dd9cccc3923edc81' },
+        success: function(data){
+          run();
+          if(data.weather[0].id >= 500 && data.weather[0].id <= 621) {
+            rainStatus = 'Yes ! ';
+            if(engine)
+              engine.rain([ [3, 3, 0.88], [5, 5, 0.9], [6, 2, 1] ], 100);
+          }
+          else {
+            rainStatus = 'No (hum... there is probably a bug)';
+            if(engine)
+              engine.rain([ [0, 0, 0], [0, 0, 0], [0, 0, 0] ], 100);
+          }
+          console.log(data);
+        }
+      });
+    }
+
+    setInterval(checkWeather, 1000*60*5);
+
     function run() {
       var image = document.getElementById('background');
       image.onload = function() {
-        var engine = new RainyDay({
+        engine = new RainyDay({
             image: this
         });
-        engine.rain([ [3, 3, 0.88], [5, 5, 0.9], [6, 2, 1] ], 100);
-
-        var c=document.getElementById("canvas");
-        var ctx=c.getContext("2d");
-        ctx.font="100px Georgia";
-        ctx.fillText("Yes !", 100, 50);
+        engine.rain([ [0, 0, 0], [0, 0, 0], [0, 0, 0] ], 100);
+        checkWeather();
       };
       image.crossOrigin = 'anonymous';
       image.src = 'http://i.imgur.com/4zON3n7.jpg';
     }
   </script>
 </head>
-<body onload="run();">
+<body onload="run()">
   <img id="background" alt="background" src="" />
 </body>
 </html>
