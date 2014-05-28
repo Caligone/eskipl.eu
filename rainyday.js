@@ -231,7 +231,7 @@ RainyDay.prototype.rain = function(presets, speed) {
     context.fillText(rainStatus, this.canvas.width/2, this.canvas.height/2);
     if(rainStatus === "No !") {
 	context.font="italic 20px Arial";
-    	context.fillText("(There is probably a bug...)", this.canvas.width/2, this.canvas.height/2);	
+    	context.fillText("(There is probably a bug...)", this.canvas.width/2, this.canvas.height/2+30);	
     }
     context.font="normal 10px Arial";
     context.fillStyle = 'white';
